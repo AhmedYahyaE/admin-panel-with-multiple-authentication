@@ -61,24 +61,30 @@ class UserController extends Controller
     }
 
     // Delete Role Form Submission (AJAX)
-    public function deleteRole(Request $request, User $user) {
+    public function deleteRole(Request $request, User $userModel) {
         // Ensure the user has the 'admin' role
         if (!Auth::user()->hasRole('admin')) {
             return redirect()->route('dashboard')->with('error', 'You do not have permission to delete roles.');
         }
 
-        // Prevent 'admin' from deleting their own role (to prevent being locked out)
-        if (Auth::user()->id == $user->id && Auth::user()->hasRole('admin')) {
-            return redirect()->back()->with('error', 'You cannot delete your own role.');
+        // Prevent 'admin' role from changing their own role altogether (to prevent locking themselves out)
+        if (
+            Auth::user()->hasRole('admin') // And the authenticated user has the 'admin' role
+            &&
+            Auth::user()->id == $userModel->id // If the authenticated user is the same as the user being edited (if the authenticated user is editing their own role)
+            &&
+            $request->role != 'admin' // And the role sent in the request is not 'admin'
+        ) {
+            return redirect()->back()->with('error', 'You cannot delete your own \'admin\' role.');
         }
 
         // Check if the user has any roles before attempting to delete
-        if ($user->roles->isEmpty()) {
+        if ($userModel->roles->isEmpty()) {
             return redirect()->back()->with('error', 'This user has no roles to delete.');
         }
 
         // Perform the role deletion (remove all roles)
-        $user->syncRoles([]); // Removing all roles from the user
+        $userModel->syncRoles([]); // Removing all roles from the user
 
         // Flash success message
         return redirect()->route('dashboard.users')->with('status', 'User role deleted successfully!');

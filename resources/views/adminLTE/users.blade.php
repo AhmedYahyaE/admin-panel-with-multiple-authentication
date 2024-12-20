@@ -135,6 +135,7 @@
                 // Handle Delete Role Button Click
                 $('.delete-role-btn').on('click', function () {
                     const userId = $(this).data('id');
+                    console.log(userId);
 
                     @if(auth()->user()->hasRole('admin'))
                         // Perform the delete action (AJAX or redirect to backend route)
