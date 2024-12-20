@@ -18,8 +18,8 @@ class UserController extends Controller
 
     // Show the Edit Role form
     public function showEditRoleForm(User $userModel) {
-        // Ensure the user has the 'admin' role
-        if (!Auth::user()->hasRole('admin')) {
+        // Ensure the user has the 'edit roles' permission
+        if (!Auth::user()->can('edit roles')) {
             return redirect()->route('dashboard')->with('error', 'You do not have permission to edit roles.');
         }
 
@@ -32,8 +32,8 @@ class UserController extends Controller
     // Edit Role Form Submission
      public function editRole(Request $request, User $userModel) {
 
-        // Ensure the user has the 'admin' role
-        if (!Auth::user()->hasRole('admin')) {
+        // Ensure the user has the 'edit roles' permission
+        if (!Auth::user()->can('edit roles')) {
             return redirect()->route('dashboard')->with('error', 'You do not have permission to edit roles.');
         }
 

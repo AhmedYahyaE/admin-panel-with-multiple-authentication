@@ -30,6 +30,10 @@
                 <div class="alert alert-danger">{{ session('error') }}</div>
             @endif
 
+            @error('error')
+                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+            @enderror
+
             <!-- Go Back to Dashboard Button -->
             <div class="mb-4 text-center">
                 <a href="{{ route('dashboard') }}" class="btn btn-secondary">
@@ -67,12 +71,16 @@
                                                 <span class="badge bg-info">{{ $role->name }}</span>
                                             @endforeach
                                         @endif
-                                    </td>
+
+                                    {{-- Debugging --}}
+                                    {{-- @dd(Auth::user()->can('edit roles')) --}}
+
                                     <td>
                                         <!-- Edit Role Button -->
                                         <button class="btn btn-primary btn-sm edit-role-btn"
                                                 data-id="{{ $user->id }}"
-                                                @if(!auth()->user()->hasRole('admin')) disabled @endif
+                                                {{-- @if(!auth()->user()->hasRole('admin')) disabled @endif --}}
+                                                @cannot('edit roles') disabled @endcannot {{-- Disable Edit Role if the authenticated user does not have the 'edit roles' permission (i.e. is not an 'admin' or 'supervisor') --}}
                                                 {{ Auth::user()->hasRole('admin') && Auth::user()->id == $user->id ? 'disabled' : '' }} {{-- Disable Edit Role if the authenticated user has an 'admin' role and is editing their own role in order to prevent them from getting locked out --}}
                                         >
                                             <i class="fa fa-edit"></i> Edit Role
@@ -81,7 +89,7 @@
                                         <!-- Delete Role Button -->
                                         <button class="btn btn-danger btn-sm delete-role-btn"
                                                 data-id="{{ $user->id }}"
-                                                @if(!auth()->user()->hasRole('admin')) disabled @endif
+                                                @if(!auth()->user()->hasRole('admin')) disabled @endif {{-- Disable Delete Role if the authenticated user does not have the 'admin' role --}}
                                                 {{ Auth::user()->hasRole('admin') && Auth::user()->id == $user->id ? 'disabled' : '' }} {{-- Disable Delete Role if the authenticated user has an 'admin' role and is editing their own role in order to prevent them from getting locked out --}}
                                         >
                                             <i class="fa fa-trash"></i> Delete Role
@@ -123,7 +131,7 @@
                 $('.edit-role-btn').on('click', function () {
                     const userId = $(this).data('id');
 
-                    @if(auth()->user()->hasRole('admin'))
+                    @if(Auth::user()->can('edit roles'))
                         // Redirect to the edit role page (you can modify the route here)
                         window.location.href = `/dashboard/users/${userId}/edit-role`;
                     @else

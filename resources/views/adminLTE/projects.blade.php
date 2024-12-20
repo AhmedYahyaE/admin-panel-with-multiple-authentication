@@ -96,7 +96,7 @@
                                 alt="User Image">
                         </div>
                         <div class="info">
-                            <a href="#" class="d-block">Ahmed Yahya</a>
+                            <a href="#" class="d-block">{{ Auth::user()->name }}</a>
                         </div>
                     </div>
 

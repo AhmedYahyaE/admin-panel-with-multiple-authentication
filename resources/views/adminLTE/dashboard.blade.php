@@ -96,7 +96,7 @@
                                 alt="User Image">
                         </div>
                         <div class="info">
-                            <a href="{{ route('dashboard') }}" class="d-block">Ahmed Yahya</a>
+                            <a href="{{ route('dashboard') }}" class="d-block">{{ Auth::user()->name }}</a>
                         </div>
                     </div>
 
@@ -111,6 +111,24 @@
 
 
                             <li class="nav-header">Sections</li>
+
+
+                            {{-- Create Role --}}
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="nav-icon far fa-plus-square"></i>
+                                    <p>Create Role</p>
+                                </a>
+                            </li>
+
+                            {{-- Create Permission --}}
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="nav-icon far fa-plus-square"></i>
+                                    <p>Create Permission</p>
+                                </a>
+                            </li>
+
 
                             <li class="nav-item">
                                 <a href="{{ route('dashboard.users') }}" class="nav-link">
@@ -143,6 +161,22 @@
                         <div class="row mb-2">
                             <div class="col-sm-6">
                                 <h1 class="m-0">Dashboard</h1>
+
+
+                                <!-- Success and Error Messages -->
+                                @if(session('success'))
+                                    <div class="alert alert-success">{{ session('success') }}</div>
+                                @endif
+
+                                @if(session('error'))
+                                    <div class="alert alert-danger">{{ session('error') }}</div>
+                                @endif
+
+                                @error('error')
+                                        <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                @enderror
+
+
                             </div><!-- /.col -->
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
