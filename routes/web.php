@@ -29,6 +29,13 @@ Route::middleware('auth')->group(function () {
     });
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
-    Route::get('/users'   , [UserController::class, 'index'])->name('users');
-    Route::get('/projects', [ProjectController::class, 'index'])->name('projects');
+    Route::get('/dashboared/users'   , [UserController::class, 'index'])->name('dashboard.users');
+    Route::get('/dashboard/projects', [ProjectController::class, 'index'])->name('dashboard.projects');
+
+    // Protect routes of managing roles (only accessible for 'admin' role) using Spatie Larvel Permission package's built-in middlewares
+    Route::middleware('role:admin')->group(function () { // 'role' is Spatie's middleware and 'admin' is a Middleware Paramter
+        Route::get('/dashboard/users/{userModel}/edit-role', [UserController::class, 'showEditRoleForm'])->name('dashboard.users.edit-role');
+        Route::post('/dashboard/users/{userModel}/edit-role', [UserController::class, 'editRole'])->name('dashboard.users.edit-role');
+        Route::post('/dashboard/users/{userModel}/delete-role', [UserController::class, 'deleteRole'])->name('dashboard.users.delete-role'); // via AJAX
+    });
 });
