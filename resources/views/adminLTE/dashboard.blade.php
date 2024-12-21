@@ -115,7 +115,7 @@
 
                             {{-- Create Role --}}
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="{{ route('dashboard.roles.create') }}" class="nav-link">
                                     <i class="nav-icon far fa-plus-square"></i>
                                     <p>Create Role</p>
                                 </a>
@@ -123,7 +123,7 @@
 
                             {{-- Create Permission --}}
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="{{ route('dashboard.permissions.create') }}" class="nav-link">
                                     <i class="nav-icon far fa-plus-square"></i>
                                     <p>Create Permission</p>
                                 </a>

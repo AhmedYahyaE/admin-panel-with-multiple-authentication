@@ -2,7 +2,7 @@
 
 // use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{DashboardController, UserController, ProjectController, RoleController};
+use App\Http\Controllers\{DashboardController, UserController, ProjectController, RoleController, PermissionController};
 
 
 
@@ -34,14 +34,19 @@ Route::middleware('auth')->group(function () {
 
 
 
-    // Protect routes of managing roles (only accessible for 'admin' role) using Spatie Larvel Permission package's built-in middlewares
+    // Protect routes of managing roles (only accessible for users having 'edit roles' permission) using Spatie Larvel Permission package's built-in middlewares
     Route::group(['middleware' => ['permission:edit roles']], function () { // 'role' is Spatie's middleware and 'admin' is a Middleware Paramter
         // Edit & Delete Roles of Users
         Route::get('/dashboard/users/{userModel}/edit-role', [UserController::class, 'showEditRoleForm'])->name('dashboard.users.edit-role');
         Route::post('/dashboard/users/{userModel}/edit-role', [UserController::class, 'editRole'])->name('dashboard.users.edit-role');
         Route::post('/dashboard/users/{userModel}/delete-role', [UserController::class, 'deleteRole'])->name('dashboard.users.delete-role'); // via AJAX
-
-        // Create Roles & Permissions
-        // Route::get('/dashboard/roles/create', [RoleController::class, 'showCreateRoleForm'])->name('dashboard.roles.create');
     });
+
+
+    // Protect routes of managing create roles (only accessible for users having 'create roles' permission, i.e. 'admin' role)
+    Route::group(['middleware' => ['permission:create roles']], function () {
+        Route::get('/dashboard/roles/create', [RoleController::class, 'showCreateRoleForm'])->name('dashboard.roles.create');
+        Route::get('/dashboard/permissions/create', [PermissionController::class, 'showCreatePermissionForm'])->name('dashboard.permissions.create');
+    });
+
 });
