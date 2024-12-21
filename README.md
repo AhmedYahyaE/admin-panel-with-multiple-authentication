@@ -1,6 +1,6 @@
 # Admin Panel with Multiple Authentication and Role-Based Access
 
-This is an Admin Panel with Multiple Authentication and Role-Based Access application built with **Laravel 11** with the help of Spatie Laravel Permission package.
+This is an Admin Panel with Multiple Authentication and Role-Based Access application built with **Laravel 11** with the help of Spatie Laravel Permission package. The admin panel supports multi-authentication, with at least three types of users: admin, supervisor, and regular user roles. Admins have full access to all features and settings, while supervisor and regular users roles have limited access based on their assigned roles and permissions.
 
 
 ## Installation Instructions
