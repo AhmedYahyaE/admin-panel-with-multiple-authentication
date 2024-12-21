@@ -1,6 +1,6 @@
 # Admin Panel with Multiple Authentication and Role-Based Access
 
-This is ClickShare E-Commerce product management application built with **Laravel 11** with the help of Spatie Laravel Permission package.
+This is an Admin Panel with Multiple Authentication and Role-Based Access application built with **Laravel 11** with the help of Spatie Laravel Permission package.
 
 
 ## Installation Instructions
@@ -44,26 +44,20 @@ Follow the steps below to set up and run the application locally.
     DB_PASSWORD=your_database_password
     ```
 
-6. **Migrate the database**:
-    Run the migrations to create the necessary tables:
-    ```bash
-    php artisan migrate
-    ```
-
-7. **Import the database:**:
+6. **Import the database:**:
     Create a MySQL database named `admin_panel_with_multiple_authentication`, then import the admin_panel_with_multiple_authentication database SQL Dump File from the path: 'database/admin_panel_with_multiple_authentication.sql' into your `admin_panel_with_multiple_authentication` database.
 
-8. **Install frontend dependencies**:
+7. **Install frontend dependencies**:
     ```bash
     npm install
     ```
 
-9. **Build Vite assets** (for frontend):
+8. **Build Vite assets** (for frontend):
     ```bash
     npm run build
     ```
 
-10. **Start the Laravel development server**:
+9. **Start the Laravel development server**:
     ```bash
     php artisan serve
     ```
